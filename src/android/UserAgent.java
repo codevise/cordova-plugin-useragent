@@ -1,27 +1,30 @@
 package de.codevise.useragent;
 
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaInterface;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
+import org.json.JSONArray;
+
 public class UserAgent extends CordovaPlugin {
 
-    public WebSettings settings;
+    private WebSettings settings;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
+        final WebView mWebView = ((WebView) webView.getEngine().getView());
 
         try {
-            settings = ((WebView) webView.getEngine().getView()).getSettings();
+            mWebView.post(new Runnable() {
+                @Override
+                public void run() {
+                    settings = mWebView.getSettings();
+                }
+            });
         } catch (Exception e) {
             settings = null;
         }
@@ -30,20 +33,21 @@ public class UserAgent extends CordovaPlugin {
     @Override
     public boolean execute(String action,
                            JSONArray args,
-                           CallbackContext callbackContext) throws JSONException {
+                           CallbackContext callbackContext) {
         try {
-            if (action.equals("get")) {
-                callbackContext.success(settings.getUserAgentString());
-                return true;
-            } else if (action.equals("set")) {
-                String userAgentString = args.optString(0);
-                settings.setUserAgentString(userAgentString);
-                callbackContext.success(settings.getUserAgentString());
-                return true;
-            } else if (action.equals("reset")) {
-                settings.setUserAgentString(null);
-                callbackContext.success(settings.getUserAgentString());
-                return true;
+            switch (action) {
+                case "get":
+                    callbackContext.success(settings.getUserAgentString());
+                    return true;
+                case "set":
+                    String userAgentString = args.optString(0);
+                    settings.setUserAgentString(userAgentString);
+                    callbackContext.success(settings.getUserAgentString());
+                    return true;
+                case "reset":
+                    settings.setUserAgentString(null);
+                    callbackContext.success(settings.getUserAgentString());
+                    return true;
             }
             callbackContext.error("Invalid action");
             return false;
