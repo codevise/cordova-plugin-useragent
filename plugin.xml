@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-useragent"
+        version="0.0.1">
+    <engines>
+        <engine name="cordova" version=">=6.0.0" />
+    </engines>
+
+    <name>Cordova User Agent</name>
+    <description>Get/set/reset user-agent string of WebView for HTTP requests.</description>
+    <author>Codevise Solutions</author>
+
+    <js-module src="www/userAgent.js" name="UserAgentApi">
+        <clobbers target="userAgent" />
+    </js-module>
+
+    <platform name="android">
+      <config-file target="res/xml/config.xml" parent="/*">
+        <feature name="UserAgent" >
+          <param name="android-package" value="de.codevise.useragent.UserAgent"/>
+        </feature>
+      </config-file>
+      <source-file src="src/android/UserAgent.java" target-dir="src/de/codevise/useragent" />
+    </platform>
+
+</plugin>
