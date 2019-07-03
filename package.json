@@ -1,0 +1,27 @@
+{
+  "name": "cordova-plugin-useragent",
+  "version": "0.0.1",
+  "description": "Cordova plugin to get/set/reset user-agent string of WebView for HTTP requests",
+  "cordova": {
+    "id": "cordova-plugin-useragent",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/schoetty/cordova-plugin-useragent.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=6.0.0"
+    }
+  ],
+  "author": "Codevise Solutions",
+  "license": "BSD"
+}

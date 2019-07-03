@@ -11,7 +11,7 @@
     <description>Get/set/reset user-agent string of WebView for HTTP requests.</description>
     <author>Codevise Solutions</author>
 
-    <js-module src="www/userAgent.js" name="UserAgentApi">
+    <js-module src="www/useragent.js" name="userAgent">
         <clobbers target="userAgent" />
     </js-module>
 
